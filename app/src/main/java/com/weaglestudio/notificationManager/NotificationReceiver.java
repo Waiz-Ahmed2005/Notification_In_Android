@@ -23,7 +23,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 "HH:mm:ss",
                 Locale.getDefault()).format(new Date());
 
-        Intent openIntent= new Intent(context, MainActivity.class);
+       Intent openIntent= new Intent(context, MainActivity.class);
 
         PendingIntent openPendingIntent=PendingIntent.getActivity(
                 context,
@@ -38,7 +38,8 @@ public class NotificationReceiver extends BroadcastReceiver {
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setContentTitle("SCHEDULED REMINDER")
                 .setContentText("CURRENT TIME:"+currentTime)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText("Dynamic Notif Generated at: "+currentTime))
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Dynamic Notif Generated at: "+currentTime))
                 .addAction(android.R.drawable.ic_menu_view,
                         "open",
                         openPendingIntent
@@ -49,7 +50,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         NotificationManager manager=(NotificationManager) context.getSystemService(
                 Context.NOTIFICATION_SERVICE
         );
-
+                                   //id                  //builder.build
         manager.notify((int)System.currentTimeMillis(),builder.build());
 
     }
@@ -60,12 +61,28 @@ public class NotificationReceiver extends BroadcastReceiver {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
 
             NotificationChannel channel=new NotificationChannel(
-                    Channel_ID,
-                    "Reminder_Notifications",
-                    NotificationManager.IMPORTANCE_HIGH);
+                    Channel_ID,//id
+                    "Reminder_Notifications",//name
+                    NotificationManager.IMPORTANCE_HIGH);//importance
             NotificationManager manager=context.getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
     }
 
 }
+
+
+//Pre Condition  Permission
+
+//1. Notification Channel Oreo>
+
+//2. Build Notification->NotificationCompat.Builder
+
+//3. PendingIntent
+
+//4. NotifcationManager getService and notify
+
+//Additional point We have to make alarmamanager if intervals
+
+
+//5. If using broadcast reciever then register it in manifest
